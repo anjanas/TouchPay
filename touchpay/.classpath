@@ -23,5 +23,9 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/jackson-all-1.7.4.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-mapper-asl-1.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/java-json.jar"/>
+	<classpathentry kind="lib" path="lib/vdpjavasdk.jar"/>
 	<classpathentry kind="output" path="target/touchpay-1.0-SNAPSHOT/WEB-INF/classes"/>
 </classpath>

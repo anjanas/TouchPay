@@ -1,21 +1,14 @@
-package touchpay;
+package com.visa.hackathon;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.visa.vdp.api.cardvalidatiion.AccountLookupRequest;
-import com.visa.vdp.api.cardvalidatiion.AccountVerificationRequest;
 import com.visa.vdp.api.common.Address;
 import com.visa.vdp.api.common.CardAcceptor;
-import com.visa.vdp.api.common.MagneticStripeData;
-import com.visa.vdp.api.common.OriginalDataElements;
-import com.visa.vdp.api.common.PointOfServiceCapability;
-import com.visa.vdp.api.common.PointOfServiceData;
-import com.visa.vdp.api.common.StreetAddress;
-import com.visa.vdp.api.payment.AccountFundingReversalRequest;
-import com.visa.vdp.api.payment.AccountFundingTransactionsRequest;
 import com.visa.vdp.api.payment.OriginalCreditTransactionsRequest;
 
 public class RequestUtil {
@@ -23,6 +16,14 @@ public class RequestUtil {
 
 	public static OriginalCreditTransactionsRequest createrequestforOCT(
 			HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		Map<String,String> map= new HashMap<String, String>();
+		map.put("senderPAN", (String)session.getAttribute("senderPAN"));
+		map.put("recipientaccno", (String)session.getAttribute("recipientaccno"));
+		map.put("amount", req.getParameter("amount"));
+		return createrequestforOCT(map);
+	}
+		public static OriginalCreditTransactionsRequest createrequestforOCT(Map<String,String> map) {
 		OriginalCreditTransactionsRequest OCTrequest = new OriginalCreditTransactionsRequest();
 
 		CardAcceptor cardAcceptor = new CardAcceptor();
@@ -46,13 +47,12 @@ public class RequestUtil {
 		OCTrequest.setSenderReference("");
 		OCTrequest.setSenderAccountNumber("4957030001013830");
 		
-		HttpSession session = req.getSession();
-		String senderPAN=(String)session.getAttribute("senderPAN");
+		String senderPAN=(String)map.get("senderPAN");
 		
 		if(senderPAN != null){
 			OCTrequest.setSenderAccountNumber(senderPAN);
 		}
-		String recipientaccno=(String)session.getAttribute("recipientaccno");
+		String recipientaccno=(String)map.get("recipientaccno");
 		
 		OCTrequest.setSenderCountryCode("USA");
 		OCTrequest.setTransactionCurrency("USD");
@@ -61,7 +61,7 @@ public class RequestUtil {
 		OCTrequest.setSenderCity("San Francisco");
 		OCTrequest.setSenderStateCode("CA");
 		OCTrequest.setRecipientCardPrimaryAccountNumber(recipientaccno);
-		OCTrequest.setAmount(new BigDecimal(req.getParameter("amount")));
+		OCTrequest.setAmount(new BigDecimal(map.get("amount")));
 		OCTrequest.setBusinessApplicationID("AA");
 		OCTrequest.setMerchantCategoryCode(6012);
 		;

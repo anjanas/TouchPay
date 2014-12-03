@@ -1,16 +1,14 @@
 package com.visa.hackathon;
 
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.SignatureException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-
-public class Algorithm {
+public class VdcAlgorithm {
 	public static String sourceString;
 	public static String sha256Digest (String data) throws SignatureException {
 		return getDigest("SHA-256", data, true);
@@ -98,5 +96,5 @@ public class Algorithm {
 		//System.out.println("The generated Xpay_Token is: " +token+ " \nThe length of the xpay token is: " +hash.length() );
 		return token;
 	}
-}
 
+}

@@ -5,16 +5,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.security.SignatureException;
 
 import javax.net.ssl.HttpsURLConnection;
 
-
-public class NetClientPost {
-
-	
-	public String getResponse(String payload,String endpoint,String xpaytoken) throws SignatureException, IOException {
+public class VdcClient {
+public String getResponse(String payload,String endpoint,String xpaytoken) throws SignatureException, IOException {
 		
 
 		System.setProperty("javax.net.ssl.trustStore", getClass().getClassLoader().getResource("sandbox.jks").getFile());
@@ -22,13 +21,13 @@ public class NetClientPost {
 
 		
 		
-		HttpsURLConnection conn= null;
+          HttpURLConnection conn= null;
 					
 			URL url = new URL(endpoint);		
 		
 			
 			
-			conn = (HttpsURLConnection) url.openConnection();
+			conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/json");		
@@ -66,5 +65,5 @@ public class NetClientPost {
 
 	}
 
-}	
 
+}

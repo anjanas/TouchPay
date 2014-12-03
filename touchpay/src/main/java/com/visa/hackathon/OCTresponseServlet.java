@@ -1,33 +1,15 @@
-package com.visa;
-
-import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONException;
-import org.json.JSONObject;
- 
-
-
-
-
-
+package com.visa.hackathon;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.SignatureException;
 
 import javax.servlet.ServletException;
- 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
-import com.vdp.Algorithm;
-import com.vdp.service.PaymentService;
-import com.vdp.util.VdpUtility;
-import com.visa.config.ConfigValues;
-import com.visa.vdp.api.exception.VisaApiException;
+import org.json.JSONObject;
  
 /**
   * Servlet implementation class ActionServlet
@@ -61,7 +43,7 @@ public class OCTresponseServlet extends HttpServlet {
 		apiKey = (String)session.getAttribute("apiKey");
 		
 		if(apiKey == null){
-			apiKey = (String)new ConfigValues().getPropValues().get("apiKey");
+			apiKey = (String) new VdcConfig().getPropValues().get("apiKey");
 		}
 		
 		//get sharedSecret
@@ -72,7 +54,8 @@ public class OCTresponseServlet extends HttpServlet {
 		sharedSecret = (String)session1.getAttribute("sharedSecret");
 		
 		if(sharedSecret == null){
-			sharedSecret = (String)new ConfigValues().getPropValues().get("sharedSecret");
+			sharedSecret = (String) new VdcConfig().getPropValues().get("sharedSecret");
+					//new Config().getPropValues().get("sharedSecret");
 		}
 		
 	 
@@ -80,7 +63,7 @@ public class OCTresponseServlet extends HttpServlet {
 	 try{
 		 
 	
-		 payload = (String)new ConfigValues().getPropValues().get("payloadOCT");
+		 payload = (String)new VdcConfig().getPropValues().get("payloadOCT");
 		 
 		 JSONObject jsonObject = new JSONObject(payload);		 
 	 jsonObject.put("Amount", request.getParameter("amount"));	
@@ -96,15 +79,15 @@ public class OCTresponseServlet extends HttpServlet {
 		}
 		
 	 
-	 NetClientPost client = new NetClientPost();
+	VdcClient client = new VdcClient();
 	 newpayload = jsonObject.toString();	
-	 endpoint = (String)new ConfigValues().getPropValues().get("urlOCT") + "?apikey=" + apiKey;
-	 token = new Algorithm().generateXpaytoken(newpayload, (String)new ConfigValues().getPropValues().get("pathOCT"), apiKey, sharedSecret);	
+	 endpoint = (String)new VdcConfig().getPropValues().get("urlOCT") + "?apikey=" + apiKey;
+	 token = new VdcAlgorithm().generateXpaytoken(newpayload, (String)new VdcConfig().getPropValues().get("pathOCT"), apiKey, sharedSecret);	
 	 
 	 res = client.getResponse(newpayload,endpoint, token);
 		if(res.startsWith("{"))		
 			
-		{	res= VdpUtility.convertToPrettyJsonstring(res);
+		{	res= VdcVdpUtil.convertToPrettyJsonstring(res);
 		
 		
 		}

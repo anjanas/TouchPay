@@ -9,16 +9,14 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
-public class VdpUtility {
-
-	
+public class VdcVdpUtil {
 	public static String convertToPrettyJsonstring(Object request)
 	{
 		String payload="";
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			payload=VdpUtility.toJSON( request);
+			payload=VdcVdpUtil.toJSON( request);
 			Object json =  mapper.readValue(payload, Object.class);
 			payload = mapper.defaultPrettyPrintingWriter().writeValueAsString(json);
 			
@@ -83,5 +81,5 @@ public class VdpUtility {
 		
 		
 	}	
-	
+
 }

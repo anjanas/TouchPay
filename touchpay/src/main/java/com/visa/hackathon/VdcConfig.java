@@ -7,20 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class ConfigValues {
-
-	
-	public static void main(String[] args){
-		ConfigValues cv = new ConfigValues();
-		try {
-			System.out.println(cv.getPropValues().get("apiKey"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-	}
-	
+public class VdcConfig {
 	public Map getPropValues() throws IOException {
 		 
 		Map result = new HashMap();
@@ -64,5 +51,5 @@ public class ConfigValues {
 		return result;
 	}
 	
-	
+
 }

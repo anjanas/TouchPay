@@ -1,20 +1,8 @@
-package touchpay;
-
-import java.io.IOException;
+package com.visa.hackathon;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-
-import com.vdp.util.RequestUtil;
-import com.visa.vdp.api.cardvalidatiion.AccountLookupRequest;
-import com.visa.vdp.api.cardvalidatiion.AccountLookupResponse;
-import com.visa.vdp.api.cardvalidatiion.AccountVerificationRequest;
-import com.visa.vdp.api.cardvalidatiion.AccountVerificationResponse;
 import com.visa.vdp.api.exception.VisaApiException;
-import com.visa.vdp.api.payment.AccountFundingTransactionsRequest;
-import com.visa.vdp.api.payment.AccountFundingTransactionsResponse;
 import com.visa.vdp.api.payment.OriginalCreditTransactionsRequest;
 import com.visa.vdp.api.payment.OriginalCreditTransactionsResponse;
 import com.visa.vdp.api.services.VisaService;
